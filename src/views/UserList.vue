@@ -1,10 +1,18 @@
 <template>
  <div class="userList">
-   <div class="userList__container">
+   <AppUser
+     v-if="selectedUser"
+     :user="selectedUser"
+     @close-user="selectedUser = null"/>
+   <div class="user-list__container">
      <div 
       v-for="user in users"
       :key="user.login.uuid"
-      class="userList__container__user">
+      class="user-list__container__user"
+      @click="showUser(user)">
+      <div class="fade">
+        {{fullName(user)}}
+      </div>
       <img :src="user.picture.large">
      </div>
    </div>
@@ -13,21 +21,59 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import AppUser from '@/components/AppUser';
 
 export default {
   name: 'UserList',
-   computed: {
+  components: {
+    AppUser
+  },
+  computed: {
     ...mapGetters({
       users: 'users',
     })
+  },
+  data() {
+    return {
+      selectedUser: null
+    }
+  },
+  methods: {
+    fullName(user) {
+      return `${user.name.first} ${user.name.last}`
+    },
+    showUser(user) {
+      this.selectedUser = user
+    }
   }
 }
 </script>
 
 <style scoped>
-  .userList__container {
+  .user-list__container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+  }
+  .user-list__container__user {
+    position: relative;
+    cursor: pointer;
+  }
+  .fade {
+    position: absolute;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+  .user-list__container__user:hover .fade {
+    opacity: 1;
+    visibility: visible;
   }
 </style>
