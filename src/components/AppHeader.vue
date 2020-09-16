@@ -4,33 +4,27 @@
        <h2>User directory</h2> 
      </div>
      <div class="app-header__nav">
-       <a
-        @click.prevent="selectView('UserList')"
-        class="app-header__nav__link">
-          Directory
-       </a>
-       <a
-        @click.prevent="selectView('Contact')"
-        class="app-header__nav__link">
-          Contact
-       </a>
-       <a
-        @click.prevent="selectView('Legal')"
-        class="app-header__nav__link">
-          Legal
-       </a>
+      <RouterLink 
+        name='Directory'
+        dest='/'/>
+      <RouterLink 
+        name='Contact'
+        dest='/contact'/>
+      <RouterLink 
+        name='Legal'
+        dest='/legal'/>
      </div>
   </div>
 </template>
 
 <script>
+import RouterLink from './RouterLink'
+
 export default {
   name: 'AppHeader',
-  methods: {
-    selectView(nameView) {
-      this.$emit('select-view', nameView)
-    }
-  }
+  components: {
+    RouterLink 
+  },
 }
 </script>
 
@@ -44,10 +38,5 @@ export default {
   .app-header__nav {
     display: flex;
     justify-content: space-around;
-  }
-  .app-header__nav__link {
-    text-decoration: none;
-    color: white;
-    cursor: pointer;
   }
 </style>

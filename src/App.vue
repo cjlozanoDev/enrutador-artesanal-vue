@@ -1,29 +1,20 @@
 <template>
   <div id="app">
-    <AppHeader
-      @select-view="selectView" />
-    <component :is="selectedView"/>
+    <AppHeader/>
+    <RouterView/>
   </div>
 </template>
 
 <script>
-import AppHeader from './components/AppHeader.vue'
-import UserList from './views/UserList'
-import Contact from './views/Contact'
-import Legal from './views/Legal'
+import AppHeader from '@/components/AppHeader.vue'
+import RouterView from './components/RouterView.vue'
+
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    UserList,
-    Contact,
-    Legal
-  },
-  data() {
-    return {
-      selectedView: 'UserList'
-    }
+    RouterView
   },
   methods: {
     selectView(nameView) {

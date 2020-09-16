@@ -1,9 +1,5 @@
 <template>
  <div class="userList">
-   <AppUser
-     v-if="selectedUser"
-     :user="selectedUser"
-     @close-user="selectedUser = null"/>
    <div class="user-list__container">
      <div 
       v-for="user in users"
@@ -21,29 +17,25 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import AppUser from '@/components/AppUser';
+import router from '../router'
 
 export default {
   name: 'UserList',
-  components: {
-    AppUser
-  },
   computed: {
     ...mapGetters({
       users: 'users',
     })
-  },
-  data() {
-    return {
-      selectedUser: null
-    }
   },
   methods: {
     fullName(user) {
       return `${user.name.first} ${user.name.last}`
     },
     showUser(user) {
-      this.selectedUser = user
+      router.$emit('navigate', {
+        slug: user.login.username,
+        name: 'users',
+        user
+      })
     }
   }
 }
